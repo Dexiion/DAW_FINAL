@@ -1,0 +1,37 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  id: 1
+  idusuario: 1
+  marca: MyString
+  modelo: MyString
+  matriculacion: 2021-12-01
+  kilometros: 1
+  cilindrada: 1
+  combustible: MyString
+  localizacion: MyString
+  potencia: 1
+  color: MyString
+  puertas: 1
+  cajadecambios: MyString
+  descripcion: MyString
+  precio: 1
+  destacado: 1
+
+two:
+  id: 1
+  idusuario: 1
+  marca: MyString
+  modelo: MyString
+  matriculacion: 2021-12-01
+  kilometros: 1
+  cilindrada: 1
+  combustible: MyString
+  localizacion: MyString
+  potencia: 1
+  color: MyString
+  puertas: 1
+  cajadecambios: MyString
+  descripcion: MyString
+  precio: 1
+  destacado: 1
