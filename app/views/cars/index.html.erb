@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+
+<html lang="es">
+    <head>
+        <meta charset="utf-8" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
+        <title></title>
+    </head>
+
+    <body>
+        <header>
+            <div class="container-fluid p-0 m-0">
+                <div class="col-12">
+                    <!-- aqui -->
+                    <div class="row-12 p-0 m-0">
+                        <div class="col-lg-12">
+                            <div class="imagenBanner">
+                                <img src="<%= asset_path('banner3.jpg') %>" class="img-fluid" alt="Responsive image">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row-12 p-0 m-0">
+                        <div class="col-lg-12">
+                            <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
+                                <div class="container-fluid">
+                                    <a class="navbar-brand" href="index.html">
+                                        <img src="<%= asset_path('logo.png') %>" width="150" height="80" alt="">
+                                    </a>
+                                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mynavbar" style="float: right; width: 60px; height: 60px;">
+                                        <span class="navbar-toggler-icon"></span>
+                                    </button>
+                                    <div class="collapse navbar-collapse" id="mynavbar">
+                                        <ul class="navbar-nav me-auto">
+                                            <li class="nav-item me-3 lg-ms-5">
+                                                <a class="nav-link" href="index.html" style="font-size: 1.8em;">Inicio</a>
+                                            </li>
+                                            <li class="nav-item me-3 lg-ms-5">
+                                                <a class="nav-link" href="coches.html" style="font-size: 1.8em;">Coches</a>
+                                            </li>
+                                            <li class="nav-item me-3">
+                                                <a class="nav-link" href="perfil.html" id="profileButton" style="font-size: 1.8em; display: none;">Perfil</a>
+                                            </li>
+                                        </ul>
+                                        <form method='post' class="d-flex align-items-center">
+                                            <button type="button" class="btn btn-outline-danger me-5" onclick="window.location.href='publishCar.html'" id="publishButton" style="display: none;">Publicar Anuncio</button>
+                                            <button type="button" class="btn btn-success mx-auto" data-bs-toggle="modal" data-bs-target="#ModalForm" id="loggingButton">
+                                                Iniciar Sesión
+                                            </button>
+                                            <button type="button" class="btn btn-danger mx-auto" onClick="logOut()" id="logoutButton" style="display: none;">
+                                                Cerrar Sesión
+                                            </button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Logging Form -->
+
+        <div class="modal fade" id="ModalForm" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <form action="" method="post" id="perfilForm">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Inicio de Sesión</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="mb-3">
+                                <label for="Username">Usuario<span class="text-danger">*</span></label>
+                                <input type="text" name="username" class="form-control" id="Username" placeholder="Introduzca Usuario" required>
+                                <input type="text" name="id" id="id" hidden>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="Password">Contraseña<span class="text-danger">*</span></label>
+                                <input type="password" name="password" class="form-control" id="Password" placeholder="Introduzca Contraseña" required>
+                            </div>
+                            <div id="wrongUser">
+
+                            </div>
+                            <div class="mb-3">
+                                <input class="form-check-input" type="checkbox" value="" id="remember" required>
+                                <label class="form-check-label" for="remember">Recordarme</label>
+                                <a href="#" class="float-end">Contraseña Olvidada</a>
+                            </div>
+                        </div>
+                        <div class="modal-footer pt-4">
+                            <button type="button" class="btn btn-success mx-auto w-100" onClick="checkLogging()">Iniciar Sesión</button>
+                        </div>
+                        <p class="text-center">¿No tienes cuenta?, <a href="Register.html">Registrese</a></p>
+                    </form>
+                </div>
+            </div>
+        </div>
+        
+        <div class="container-fluid p-0">
+            <div class="row justify-content-center mt-5 m-0 p-0">
+                <div class="col-lg-10">
+                    <div class="row justify-content-center" id="allCars">
+                        <% @cars.each do |car| %>
+                            <div class="col-lg-6 col-xs-12\"> 
+                                <div class="row"> 
+                                    <div class="col-12"> 
+                                        <div class="courses-thumb courses-thumb-secondary"> 
+                                            <div class="courses-top"> 
+                                                <div class="courses-image text-center"> 
+                                                    <img src="<%= asset_path('defaultCar.png') %>" class="imgCoche" alt=""> 
+                                                </div> 
+                                                <div class="courses-date"> 
+                                                    <span title="Author"><i class="fa fa-dashboard"></i><%= car.kilometros %> Km</span> 
+                                                    <span title="Author"><i class="fa fa-cube"></i><%= car.cilindrada %> CC</span> 
+                                                    <span title="Views"><i class="fa fa-cog"></i><%= car.cajadecambios %></span> 
+                                                </div> 
+                                            </div> 
+                                            <div class="courses-detail"> 
+                                                <h3><a href="/cars/<%= car.id %>" class="carTitle"> <%= car.marca %> <%= car.modelo %></a></h3> 
+                                                <p class="lead"><strong><b><%= car.precio %>€</b></strong></p> 
+                                                <p><%= car.potencia %> CV &nbsp;&nbsp;/&nbsp;&nbsp; <%= car.combustible %> &nbsp;&nbsp;/&nbsp;&nbsp; <%= car.puertas %> Puertas &nbsp;&nbsp;/&nbsp;&nbsp; <%= car.localizacion %></p> 
+                                                <p><%= car.descripcion %></p> 
+                                            </div> 
+                                            <div class="courses-info">
+                                                <%# <%= link_to 'Show', cars_path(car) %>
+                                                <a href="/cars/<%= car.id %>" class="btn btn-danger btn-lg btn-block">Mas Info</a>
+                                            </div> 
+                                        </div> 
+                                    </div> 
+                                </div> 
+                            </div>
+                        <% end %>     
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-5 paginationNav m-0 p-0">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                        <li class="page-item"><a class="page-link" id="btn_prev" href="javascript:prevPage()">Previous</a></li>
+                        <li class="page-item"><a class="page-link"><span id="page"></span></a></li>
+                        <li class="page-item"><a class="page-link" id="btn_next" href="javascript:nextPage()">Next</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+        <script>
+            var modal = document.getElementById('ModalForm');
+
+            window.onclick = function(event) {
+                if (event.target == modal) {
+                    modal.style.display = "none";
+                }
+            }
+        </script>
+    </body>
+</html>

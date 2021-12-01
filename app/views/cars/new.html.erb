@@ -1,0 +1,40 @@
+<br><br><br>
+
+<%= form_with(model: @car) do |form| %>
+    <div>
+        <%=form.label :idusuario%>
+        <%=form.text_field :idusuario%>
+        <%=form.label :marca%>
+        <%=form.text_field :marca%>
+        <%=form.label :modelo%>
+        <%=form.text_field :modelo%>
+        <%=form.label :matriculacion%>
+        <%=form.date_select :matriculacion, start_year: 1800, end_year: Time.now.year%>
+        <%=form.label :kilometros%>
+        <%=form.text_field :kilometros, as: :numeric%>
+        <%=form.label :cilindrada%>
+        <%=form.text_field :cilindrada, as: :numeric%>
+        <%=form.label :combustible%>
+        <%=form.text_field :combustible%>
+        <%=form.label :localizacion%>
+        <%=form.text_field :localizacion%>
+        <%=form.label :potencia%>
+        <%=form.text_field :potencia, as: :numeric%>
+        <%=form.label :color%>
+        <%=form.text_field :color%>
+        <%=form.label :puertas%>
+        <%=form.text_field :puertas, as: :numeric%>
+        <%=form.label :cajadecambios%>
+        <%=form.text_field :cajadecambios%>
+        <%=form.label :descripcion%>
+        <%=form.text_field :descripcion%>
+        <%=form.label :precio%>
+        <%=form.text_field :precio, as: :numeric%>
+        <%=form.label :destacado%>
+        <%=form.text_field :destacado, as: :numeric%>
+    </div>
+
+    <div>
+        <%=form.submit %>
+    </div>
+<% end %>
