@@ -1,40 +1,172 @@
-<br><br><br>
+<!DOCTYPE html>
 
-<%= form_with(model: @car) do |form| %>
-    <div>
-        <%=form.label :idusuario%>
-        <%=form.text_field :idusuario%>
-        <%=form.label :marca%>
-        <%=form.text_field :marca%>
-        <%=form.label :modelo%>
-        <%=form.text_field :modelo%>
-        <%=form.label :matriculacion%>
-        <%=form.date_select :matriculacion, start_year: 1800, end_year: Time.now.year%>
-        <%=form.label :kilometros%>
-        <%=form.text_field :kilometros, as: :numeric%>
-        <%=form.label :cilindrada%>
-        <%=form.text_field :cilindrada, as: :numeric%>
-        <%=form.label :combustible%>
-        <%=form.text_field :combustible%>
-        <%=form.label :localizacion%>
-        <%=form.text_field :localizacion%>
-        <%=form.label :potencia%>
-        <%=form.text_field :potencia, as: :numeric%>
-        <%=form.label :color%>
-        <%=form.text_field :color%>
-        <%=form.label :puertas%>
-        <%=form.text_field :puertas, as: :numeric%>
-        <%=form.label :cajadecambios%>
-        <%=form.text_field :cajadecambios%>
-        <%=form.label :descripcion%>
-        <%=form.text_field :descripcion%>
-        <%=form.label :precio%>
-        <%=form.text_field :precio, as: :numeric%>
-        <%=form.label :destacado%>
-        <%=form.text_field :destacado, as: :numeric%>
-    </div>
+<html lang="es">
+    <head>
+        <meta charset="utf-8" />
+        <script
+          src="https://code.jquery.com/jquery-3.6.0.min.js"
+          integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+          crossorigin="anonymous"></script>
+        <title></title>
+    </head>
 
-    <div>
-        <%=form.submit %>
-    </div>
-<% end %>
+    <body>
+      <header>
+        <div class="container-fluid p-0 m-0">
+          <div class="col-12">
+            <!-- aqui -->
+            <div class="row-12 p-0 m-0">
+              <div class="col-lg-12">
+                <div class="imagenBanner">
+                  <img src="<%= asset_path('banner3.jpg') %>" class="img-fluid" alt="Responsive image">
+                </div>
+              </div>
+            </div>
+            <div class="row-12 p-0 m-0">
+              <div class="col-lg-12">
+                <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
+                  <div class="container-fluid">
+                    <a class="navbar-brand" href="index.html">
+                      <img src="<%= asset_path('logo.png') %>" width="150" height="80" alt="">
+                    </a>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mynavbar" style="float: right; width: 60px; height: 60px;">
+                      <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="mynavbar">
+                      <ul class="navbar-nav me-auto">
+                        <li class="nav-item me-3 lg-ms-5">
+                          <a class="nav-link" href="/" style="font-size: 1.8em;">Inicio</a>
+                        </li>
+                        <li class="nav-item me-3 lg-ms-5">
+                          <a class="nav-link" href="/cars" style="font-size: 1.8em;">Coches</a>
+                        </li>
+                        <li class="nav-item me-3">
+                          <a class="nav-link" href="perfil.html" id="profileButton" style="font-size: 1.8em; display: none;">Perfil</a>
+                        </li>
+                      </ul>
+                      <div class="d-flex align-items-center">
+                        <% if !logged_in?%>
+                          <button type="button" class="btn btn-success mx-auto" data-bs-toggle="modal" data-bs-target="#ModalForm" id="loggingButton">
+                            Iniciar Sesión
+                          </button>
+                        <%else %>
+                          <button type="button" class="btn btn-outline-danger me-5" onclick="window.location.href='/cars/new'" id="publishButton">Publicar Anuncio</button>
+                          <%= form_tag '/logout' do %>
+                            <%= submit_tag "Cerrar Sesión", class: 'btn btn-danger mx-auto' %>
+                          <% end %>
+                        <%end %>
+                      </div>
+                    </div>
+                  </div>
+                </nav>
+              </div>
+            </div>
+          </div>
+        </div>
+      </header>
+        
+        <div class="container-fluid p-0">
+            <div class="row no-gutters justify-content-center m-0 p-0" id="publishForm">
+                <div class="col-8">
+                    <div class="publishForm">
+                        <%= form_with(model: @car) do |form| %>
+                            <div class="container">
+                                <h1>Especificaciones del Vehiculo</h1>
+                                <p>Rellene este formulario para vender su vehiculo</p>
+                                <hr>
+
+                                <b><%=form.label :matriculacion, 'Fecha de matriculación'%></b><br>
+                                <%=form.text_field :matriculacion, :placeholder => 'Introduzca fecha de matriculacion de vehiculo', :required => true, :pattern => '^(19|20)\d\d[-](0[1-9]|1[012])[-](0[1-9]|[12][0-9]|3[01])$', :title => 'La fecha debe tener formato AAAA-MM-DD'%><br>
+
+                                <b><%=form.label :marca, 'Marca'%></b><br>
+                                <%=form.text_field :marca, :placeholder => 'Introduzca marca de vehiculo', :required => true%><br>
+                                
+                                <b><%=form.label :modelo, 'Modelo'%></b><br>
+                                <%=form.text_field :modelo, :placeholder => 'Introduzca modelo de vehiculo', :required => true%><br>
+
+                                <b><%=form.label :combustible, 'Combustible'%></b><br>
+                                <%=form.text_field :combustible, :placeholder => 'Introduzca el combustible usado', :required => true%><br>
+        
+                                <b><%=form.label :kilometros, 'Kilometros'%></b><br>
+                                <%=form.text_field :kilometros, :placeholder => 'Kilometros de odometro', :required => true, :pattern => '^[0-9]+$', :title => 'El valor debe ser numerico, sin espacios ni puntos'%><br>
+
+                                <h1>Detalles del Vehiculo</h1>
+                                <p>Rellene con los detalles del vehiculo</p>
+                                <hr>
+
+                                <b><%=form.label :localizacion, 'Localizacion'%></b><br>
+                                <%=form.text_field :localizacion, :placeholder => 'Introduzca localizacion del vehiculo', :required => true%><br>
+                            
+                                <b><%=form.label :cilindrada, 'Cilindrada del vehiculo'%></b><br>
+                                <%=form.text_field :cilindrada, :placeholder => 'Introduzca cilindrada del vehiculo', :required => true, :pattern => '^[0-9]+$', :title => 'El valor debe ser numerico, sin espacios ni puntos'%><br>
+                            
+                                <b><%=form.label :potencia, 'Potencia del vehiculo'%></b><br>
+                                <%=form.text_field :potencia, :placeholder => 'Introduzca potencia del vehiculo', :required => true, :pattern => '^[0-9]+$', :title => 'El valor debe ser numerico, sin espacios ni puntos'%><br>
+        
+                                <b><%=form.label :cajadecambios, 'Caja de Cambios'%></b><br>
+                                <%=form.text_field :cajadecambios, :placeholder => 'Introduzca tipo de caja de cambios del vehiculo', :required => true%><br>
+                            
+                                <b><%=form.label :color, 'Color'%></b><br>
+                                <%=form.text_field :color, :placeholder => 'Introduzca color del vehiculo', :required => true%><br>
+                            
+                                <b><%=form.label :puertas, 'Puertas'%></b><br>
+                                <%=form.text_field :puertas, :placeholder => 'Introduzca numero de puertas del vehiculo', :required => true, :pattern => '^[0-9]+$', :title => 'El valor debe ser numerico, sin espacios ni puntos'%><br>
+                            
+                                <b><%=form.label :descripcion, 'Descripcion'%></b><br>
+                                <%=form.text_field :descripcion, :placeholder => 'Introduzca descripción del vehiculo', :required => true, :class => 'descripcionTextarea', :oninput =>'this.style.height = "";this.style.height = this.scrollHeight + "px"'%><br>
+        
+                                <b><%=form.label :precio, 'Precio'%></b><br>
+                                <%=form.text_field :precio, :placeholder => 'Introduzca precio del vehiculo', :required => true, :pattern => '^[0-9]+$', :title => 'El valor debe ser numerico, sin espacios ni puntos'%><br>
+
+
+                                <b><%=form.label :images, 'Imagenes'%></b><br>
+                                <%= form.file_field :images, :id => 'gallery-photo-add', multiple: true %>
+                                <input type="button" value="Clear" onclick="clearInputFile()">
+                                <div class="gallery" id="galeria"></div><br>
+
+                                <hr>
+
+                                <%=form.submit :class => 'nextbtn'%>
+                        
+                            </div>
+                        <% end %>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <script>
+            $(function() {
+                // Multiple images preview in browser
+                var imagesPreview = function(input, placeToInsertImagePreview) {
+
+                    if (input.files) {
+                        var filesAmount = input.files.length;
+
+                        for (i = 0; i < filesAmount; i++) {
+                            var reader = new FileReader();
+
+                            reader.onload = function(event) {
+                                $($.parseHTML('<img>')).attr('src', event.target.result).appendTo(placeToInsertImagePreview);
+                            }
+
+                            reader.readAsDataURL(input.files[i]);
+                        }
+                    }
+
+                };
+
+                $('#gallery-photo-add').on('change', function() {
+                    imagesPreview(this, 'div.gallery');
+                });
+            });
+
+            function clearInputFile(f){
+                $("#gallery-photo-add").val("");
+                $("#galeria").html("");
+            }
+        </script>
+    </body>
+
+    <br><br>
+</html>

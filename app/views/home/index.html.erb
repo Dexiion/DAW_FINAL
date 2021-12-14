@@ -1,7 +1,359 @@
-<div class="row">
-    <div class="col-8">
-        <h1>PENE</h1>
-    </div>
-</div>
+<!DOCTYPE html>
 
-<p>Find me in app/views/home/index.html.erb</p>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
+    <script
+      src="https://code.jquery.com/jquery-3.6.0.min.js"
+      integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+      crossorigin="anonymous"></script>
+    <title></title>
+  </head>
+
+  <body>
+    <header>
+      <div class="container-fluid p-0 m-0">
+        <div class="col-12">
+          <!-- aqui -->
+          <div class="row-12 p-0 m-0">
+            <div class="col-lg-12">
+              <div class="imagenBanner">
+                <img src="<%= asset_path('banner3.jpg') %>" class="img-fluid" alt="Responsive image">
+              </div>
+            </div>
+          </div>
+          <div class="row-12 p-0 m-0">
+            <div class="col-lg-12">
+              <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
+                <div class="container-fluid">
+                  <a class="navbar-brand" href="index.html">
+                    <img src="<%= asset_path('logo.png') %>" width="150" height="80" alt="">
+                  </a>
+                  <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mynavbar" style="float: right; width: 60px; height: 60px;">
+                    <span class="navbar-toggler-icon"></span>
+                  </button>
+                  <div class="collapse navbar-collapse" id="mynavbar">
+                    <ul class="navbar-nav me-auto">
+                      <li class="nav-item me-3 lg-ms-5">
+                        <a class="nav-link" href="/" style="font-size: 1.8em;">Inicio</a>
+                      </li>
+                      <li class="nav-item me-3 lg-ms-5">
+                        <a class="nav-link" href="/cars" style="font-size: 1.8em;">Coches</a>
+                      </li>
+                      <li class="nav-item me-3">
+                        <a class="nav-link" href="perfil.html" id="profileButton" style="font-size: 1.8em; display: none;">Perfil</a>
+                      </li>
+                    </ul>
+                    <div class="d-flex align-items-center">
+                      <% if !logged_in?%>
+                        <button type="button" class="btn btn-success mx-auto" data-bs-toggle="modal" data-bs-target="#ModalForm" id="loggingButton">
+                          Iniciar Sesión
+                        </button>
+                      <%else %>
+                        <button type="button" class="btn btn-outline-danger me-5" onclick="window.location.href='/cars/new'" id="publishButton">Publicar Anuncio</button>
+                        <%= form_tag '/logout' do %>
+                          <%= submit_tag "Cerrar Sesión", class: 'btn btn-danger mx-auto' %>
+                        <% end %>
+                      <%end %>
+                    </div>
+                  </div>
+                </div>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+  <!-- Logging Form -->
+
+    <div class="modal fade" id="ModalForm" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Inicio de Sesión</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <%= form_tag '/login' do %>
+              <div class="modal-body">
+                <div class="mb-3">
+                  Usuario: <%= text_field_tag :username, nil, :required => true %>
+                </div>
+
+                <div class="mb-3">
+                  Contraseña: <%= password_field_tag :password, nil, :required => true  %>
+                </div>
+                <div id="wrongUser">
+
+                </div>
+                <div class="mb-3">
+                  <input class="form-check-input" type="checkbox" value="" id="remember">
+                  <label class="form-check-label" for="remember">Recordarme</label>
+                  <a href="#" class="float-end">Contraseña Olvidada</a>
+                </div>
+              </div>
+              <div class="modal-footer pt-4">
+                <%= submit_tag "Iniciar Sesión" %>
+              </div>
+              <p class="text-center">¿No tienes cuenta?, <a href="/users/new">Registrese</a></p>
+            <%end %>
+        </div>
+      </div>
+    </div>
+
+    <!-- Destacados -->
+
+    <section>
+      <div class="container-fluid">
+        <div class="row mt-5 justify-content-center">
+          <div class="col-8 ms-md-2 ms-sm-3">
+            <div class="row mx-auto my-auto justify-content-center">
+              <div id="carouselId" class="carousel slide carousel-fade" data-bs-ride="carousel">
+                <div id="outstandingCarousel" class="carousel-inner" role="listbox">
+                  <div class="carousel-item active">
+                    <div class="col-lg-3 col-12">
+                      <div class="card-sl" style="margin-right: 10px;">
+                        <div class="card-image">
+                          <%if @firstOutstandingCars.images.attached? %>
+                            <%= image_tag @firstOutstandingCars.images[0], class: "imgCoche", alt: "Responsive image" %>
+                          <%else %>
+                            <img src="<%= asset_path('defaultCar.png') %>" class="img-fluid" alt="Responsive image">
+                          <%end %>
+                        </div>
+                        <div class="card-heading">
+                          <%= @firstOutstandingCars.marca %>
+                        </div>
+                        <div class="card-subheading">
+                          <%= @firstOutstandingCars.modelo %>
+                        </div>
+                        <div class="card-text">
+                          <p style="font-size: 1.1em; margin-top: -10px;">Km: <b><%= @firstOutstandingCars.kilometros %> Km</b></p>
+                          <p style="font-size: 1.1em; margin-top: -10px;">Provincia: <b><%= @firstOutstandingCars.localizacion %></b></p>
+                          <p style="font-size: 1.1em; margin-top: -10px;">Caja de Cambios: <b><%= @firstOutstandingCars.cajadecambios %></b></p>
+                        </div>
+                        <div class="card-price">
+                          <%= @firstOutstandingCars.precio %>€
+                        </div>
+                        <a href="/cars/<%= @firstOutstandingCars.id %>" class="card-button"> Mas Info</a>
+                      </div>
+                    </div>
+                  </div>
+                  <% @otherOutstandingCars.each do |outstandingCar| %>
+                    <div class="carousel-item">
+                      <div class="col-lg-3 col-12">
+                        <div class="card-sl" style="margin-right: 10px;">
+                          <div class="card-image">
+                            <%if outstandingCar.images.attached? %>
+                              <%= image_tag outstandingCar.images[0], class: "imgCoche", alt: "Responsive image" %>
+                            <%else %>
+                              <img src="<%= asset_path('defaultCar.png') %>" class="img-fluid" alt="Responsive image">
+                            <%end %>
+                          </div>
+                          <div class="card-heading">
+                            <%= outstandingCar.marca %>
+                          </div>
+                          <div class="card-subheading">
+                            <%= outstandingCar.modelo %>
+                          </div>
+                          <div class="card-text">
+                            <p style="font-size: 1.1em; margin-top: -10px;">Km: <b><%= outstandingCar.kilometros %> Km</b></p>
+                            <p style="font-size: 1.1em; margin-top: -10px;">Provincia: <b><%= outstandingCar.localizacion %></b></p>
+                            <p style="font-size: 1.1em; margin-top: -10px;">Caja de Cambios: <b><%= outstandingCar.cajadecambios %></b></p>
+                          </div>
+                          <div class="card-price">
+                            <%= outstandingCar.precio %>€
+                          </div>
+                          <a href="/cars/<%= outstandingCar.id %>" class="card-button"> Mas Info</a>
+                        </div>
+                      </div>
+                    </div>
+                  <% end %>
+                </div>
+                <a class="carousel-control-prev bg-transparent w-aut " href="#carouselId" role="button" data-bs-slide="prev" style="height: 32px; width: 32px; margin-top: 15rem !important; margin-left: -1.8rem !important;">
+                  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                </a>
+                <a class="carousel-control-next bg-transparent w-aut" href="#carouselId" role="button" data-bs-slide="next" style="height: 32px; width: 32px; margin-top: 15rem !important; margin-right: -1rem !important;">
+                  <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Filtros -->
+
+          <div class="col-lg-3 col-8 offset-lg-1 mt-5 ms-lg-5 border">
+            <form action="filtered_cars/index" id="filterForm">
+              <div class="row mb-3 px-lg-2 mt-4">
+                <h5 style="text-align: center;">Provincia</h5>
+                <div class="col-12">
+                  <select class="form-select" aria-label="Default select example" id="location" name="location">
+                    <option hidden >Provincia</option>
+                    <option value="Las Palmas">Las Palmas</option>
+                    <option value="Santa Cruz de Tenerife">Santa Cruz de Tenerife</option>
+                    <option value="Barcelona">Barcelona</option>
+                  </select>
+                </div>
+              </div>
+              <div class="row mb-3 px-lg-2">
+                <h5 style="text-align: center;">Marca</h5>
+                <div class="col-12">
+                  <select class="form-select" aria-label="Default select example" id="brand" name="brand">
+                    <option hidden >Marca</option>
+                    <option value="Volkswagen">Volkswagen</option>
+                    <option value="BMW">BMW</option>
+                    <option value="Seat">Seat</option>
+                  </select>
+                </div>
+              </div>
+              <div class="row mb-3 px-lg-2">
+                <h5 style="text-align: center;">Combustible</h5>
+                <div class="col-12">
+                  <select class="form-select" aria-label="Default select example" id="fuel" name="fuel">
+                    <option hidden >Combustible</option>
+                    <option value="Gasolina">Gasolina</option>
+                    <option value="Diesel">Diesel</option>
+                    <option value="Electrico">Electrico</option>
+                  </select>
+                </div>
+              </div>
+              <div class="row mb-3 px-lg-2">
+                <h5 style="text-align: center;">Precio</h5>
+                <div class="col-lg-6 mb-2">
+                  <select class="form-select" aria-label="Default select example" id="minprice" name="minprice">
+                    <option hidden >Min.</option>
+                    <option value="0">0</option>
+                    <option value="1000">1000</option>
+                    <option value="2000">2000</option>
+                  </select>
+                </div>
+                <div class="col-lg-6 px-lg-2">
+                  <select class="form-select" aria-label="Default select example" id="maxprice" name="maxprice">
+                    <option hidden >Max.</option>
+                    <option value="0">0</option>
+                    <option value="1000">1000</option>
+                    <option value="2000">2000</option>
+                  </select>
+                </div>
+              </div>
+              <div class="row mb-3 px-lg-2">
+                <h5 style="text-align: center;">Puertas</h5>
+                <div class="col-12">
+                  <select class="form-select" aria-label="Default select example" id="doors" name="doors">
+                    <option hidden >Puertas</option>
+                    <option value="5">5 Puertas</option>
+                    <option value="3">3 Puertas</option>
+                    <option value="xd">JAJA si</option>
+                  </select>
+                </div>
+              </div>
+              <div class="row mb-3 px-lg-2">
+                <div class="col-12">
+                  <button type="button" class="btn btn-danger" onClick="submitFilterForm()">Filtrar</button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+
+        <!-- Otros Coches -->
+
+        <div class="row mt-3 offset-lg-1 justify-content-center">
+          <div class="col-6 ms-lg-5">
+            <div class="row mt-lg-4 justify-content-center" id="otherCars">
+              <% @otherCars.each do |otherCar| %>
+                <div class="col-lg-4 mt-4">
+                  <div class="card-sl mb-3 mb-lg-0">
+                    <div class="card-image">
+                      <%if otherCar.images.attached? %>
+                        <%= image_tag otherCar.images[0], class: "imgCoche", alt: "Responsive image" %>
+                      <%else %>
+                        <img src="<%= asset_path('defaultCar.png') %>" class="img-fluid" alt="Responsive image">
+                      <%end %>
+                    </div>
+                    <div class="card-heading">
+                      <%= otherCar.marca %>
+                    </div>
+                    <div class="card-subheading">
+                      <%= otherCar.modelo %>
+                    </div>
+                    <div class="card-text">
+                      <p style="font-size: 1.1em; margin-top: -10px;">Km: <b><%= otherCar.kilometros %> Km</b></p>
+                      <p style="font-size: 1.1em; margin-top: -10px;">Provincia: <b><%= otherCar.localizacion %></b></p>
+                    </div>
+                    <div class="card-price">
+                      <%= otherCar.precio %>€
+                    </div>
+                    <a href="/cars/<%= otherCar.id %>" class="card-button"> Mas Info</a>
+                  </div>
+                </div>
+              <% end %>
+            </div>
+          </div>
+
+          <!-- Anuncio -->
+
+          <div class="col-lg-3 offset-lg-2 text-center">
+            <div class="row mt-6">
+              <div class="adImage mt-6">
+                <a href="https://www.youtube.com/watch?v=PyoRdu-i0AQ">
+                  <img <%= asset_path('ad.gif') %>>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+
+    <div class="footer-basic mt-5">
+      <footer>
+        <div class="social"><a href="#"><i class="icon ion-social-instagram"></i></a><a href="#"><i class="icon ion-social-snapchat"></i></a><a href="#"><i class="icon ion-social-twitter"></i></a><a href="#"><i class="icon ion-social-facebook"></i></a></div>
+        <ul class="list-inline">
+          <li class="list-inline-item"><a href="#">Home</a></li>
+          <li class="list-inline-item"><a href="#">Services</a></li>
+          <li class="list-inline-item"><a href="#">About</a></li>
+          <li class="list-inline-item"><a href="#">Terms</a></li>
+          <li class="list-inline-item"><a href="#">Privacy Policy</a></li>
+        </ul>
+        <p class="copyright">AutoCanaria © 2021</p>
+      </footer>
+    </div>
+    <script>
+        window.onload = function() {
+            let items = document.querySelectorAll('.carousel .carousel-item')
+
+            items.forEach((el) => {
+                const minPerSlide = 4;
+                let next = el.nextElementSibling;
+                for (var i=1; i<minPerSlide; i++) {
+                    if (!next) {
+
+                        next = items[0];
+                    }
+                    let cloneChild = next.cloneNode(true);
+                    el.appendChild(cloneChild.children[0]),
+                        next = next.nextElementSibling;
+                }
+            })
+        };
+
+        var checkLogging = function() {
+            document.getElementById("perfilForm").submit();
+        }
+
+        var submitFilterForm = function() {
+            document.getElementById("filterForm").submit();
+        }
+        var modal = document.getElementById('ModalForm');
+
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+    </script>
+  </body>
+</html>

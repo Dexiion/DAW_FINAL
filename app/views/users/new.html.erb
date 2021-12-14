@@ -1,20 +1,11 @@
 <!DOCTYPE html>
 
-<html lang="es">
+<html lang="es" >
   <head>
-    <meta charset="utf-8" />
-    <link rel="stylesheet" href="Estilos/homePage.css">
-    <link rel="stylesheet" href="Estilos/infocochePage.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <meta charset="utf-8" /><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/2.3.0/mustache.min.js"></script>
-    <script src="scripts/scriptsanuncio.js"></script>
-    <script src="scripts/checkLoggingScripts.js"></script>
-
-
-    <title>Anuncio del vehiculo</title>
+    <title></title>
   </head>
   <body>
     <header>
@@ -107,67 +98,52 @@
       </div>
     </div>
 
-    <div class="container-fluid mt-5">
-      <div class="card">
-        <div class="card-body">
-          <div class="row">
-            <div class="col-lg-5 col-md-12 col-sm-12">
-              <div class="row">
-                <div class="col-12" id="MarcaPrecio">
-                </div>
-                <div class="col-12">
-                  <div class="white-box text-center mt-3">
-                    <div id="carouselId" class="carousel"  data-bs-ride="carousel">
-                      <div id="outstandingCarousel" class="carousel-inner" role="listbox">
-                        <div class="carousel-inner text-center" id="Imagenes">
-                        </div>
-                      </div>
-                      <div id="carouselNav">
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-12" id="descripcion">
-                </div>
-              </div>
-            </div>
-            <div class="col-lg-5 col-md-8 col-sm-12" id="infotabla">
-            </div>
-            <div class="col-lg-2 col-md-3 col-sm-12">
-              <div class="row">
-                <div class="col-lg-12 col-md-12  col-sm-4 col-4" id="fotocontacto">
-                </div>
-                <div class="col-lg-12 col-md-12 col-sm-8 col-8 mt-sm-5" id="tableVendedor">
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+    <div class="register">
+      <div class="registerForm">
+        <%= form_with(model: @user) do |f| %>
+          <h1>Registro</h1>
+          <p>Rellene este formulario para crear su cuenta</p>
+          <hr>
+          <b><%=  f.label :username, "Usuario"%></b>
+          <%= f.text_field :username, :placeholder => "Introduzca Nombre de Usuario", :required => true%>
+
+          <b><%=  f.label :email, "Email"%></b>
+          <%= f.text_field :email, :placeholder => "Introduzca Email", :required => true%>
+
+          <b><%=  f.label :password, "Contraseña"%></b>
+          <%= f.password_field :password, :placeholder => "Introduzca Contraseña", :required => true, :pattern => "^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{6,}$", :tittle => "La contraseña debe ser de 6 caracteres minimo, contener al menos una Mayuscula, una Minusucla, un Numero y un Caracter Especial"%>
+
+          <b><%=  f.label :psw_repeat, "Repetir Contraseña"%></b>
+          <%= f.password_field :psw_repeat, :placeholder => "Repita la Contraseña", :required => true, :oninput =>"check(this)"%>
+
+          <div id="passwordNotMatch"></div>
+
+          <b><%=  f.label :location, "Provincia"%></b>
+          <%= f.text_field :location, :placeholder => "Provincia", :required => true%>
+
+          <b><%=  f.label :telephone, "Telefono"%></b>
+          <%= f.text_field :telephone, :placeholder => "Telefono (Ópcional) - Ej: 123 456 789", :pattern => "[0-9]{3} [0-9]{3} [0-9]{3}", :tittle => "El telefono deben ser 9 numeros agrupados en 3 separados por espacios Ej: 123 456 789"%>
+
+          <p>Creando esta cuenta usted acepta nuestra <a href="#">Politica y Terminos</a>.</p>
+
+          <%= f.submit "Registrar" %>
+        <% end %>
       </div>
     </div>
-    </div>
-
-
-    <div class="footer-basic mt-5">
-      <footer>
-        <div class="social"><a href="#"><i class="icon ion-social-instagram"></i></a><a href="#"><i class="icon ion-social-snapchat"></i></a><a href="#"><i class="icon ion-social-twitter"></i></a><a href="#"><i class="icon ion-social-facebook"></i></a></div>
-        <ul class="list-inline">
-          <li class="list-inline-item"><a href="#">Home</a></li>
-          <li class="list-inline-item"><a href="#">Services</a></li>
-          <li class="list-inline-item"><a href="#">About</a></li>
-          <li class="list-inline-item"><a href="#">Terms</a></li>
-          <li class="list-inline-item"><a href="#">Privacy Policy</a></li>
-        </ul>
-        <p class="copyright">AutoCanaria © 2021</p>
-      </footer>
-    </div>
-
     <script>
         var modal = document.getElementById('id01');
 
         window.onclick = function(event) {
             if (event.target == modal) {
                 modal.style.display = "none";
+            }
+        }
+
+        function check(input) {
+            if (input.value != document.getElementById('psw').value) {
+                input.setCustomValidity('Las contraseñas deben coincidir');
+            } else {
+                input.setCustomValidity('');
             }
         }
     </script>
