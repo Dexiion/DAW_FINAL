@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 
 <html lang="es">
-    <head>
-        <meta charset="utf-8" />
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
-        <title></title>
-    </head>
+  <head>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
+    <title></title>
+  </head>
 
-    <body>
+  <body>
     <header>
       <div class="container-fluid p-0 m-0">
         <div class="col-12">
@@ -97,67 +97,67 @@
         </div>
       </div>
     </div>
-        
-        <div class="container-fluid p-0">
-            <div class="row justify-content-center mt-5 m-0 p-0">
-                <div class="col-lg-10">
-                    <div class="row justify-content-center" id="allCars">
-                        <% @cars.each do |car| %>
-                            <div class="col-lg-6 col-xs-12\"> 
-                                <div class="row"> 
-                                    <div class="col-12"> 
-                                        <div class="courses-thumb courses-thumb-secondary"> 
-                                            <div class="courses-top"> 
-                                                <div class="courses-image text-center">
-                                                    <%if car.images.attached? %>
-                                                      <%= image_tag car.images[0], class: "imgCoche", alt: "Responsive image" %>
-                                                    <%else %>
-                                                      <img src="<%= asset_path('defaultCar.png') %>" class="img-fluid" alt="Responsive image">
-                                                    <%end %>
-                                                </div> 
-                                                <div class="courses-date"> 
-                                                    <span title="Author"><i class="fa fa-dashboard"></i><%= car.kilometros %> Km</span> 
-                                                    <span title="Author"><i class="fa fa-cube"></i><%= car.cilindrada %> CC</span> 
-                                                    <span title="Views"><i class="fa fa-cog"></i><%= car.cajadecambios %></span> 
-                                                </div> 
-                                            </div> 
-                                            <div class="courses-detail"> 
-                                                <h3><a href="/cars/<%= car.id %>" class="carTitle"> <%= car.marca %> <%= car.modelo %></a></h3> 
-                                                <p class="lead"><strong><b><%= car.precio %>€</b></strong></p> 
-                                                <p><%= car.potencia %> CV &nbsp;&nbsp;/&nbsp;&nbsp; <%= car.combustible %> &nbsp;&nbsp;/&nbsp;&nbsp; <%= car.puertas %> Puertas &nbsp;&nbsp;/&nbsp;&nbsp; <%= car.localizacion %></p> 
-                                                <p><%= car.descripcion %></p> 
-                                            </div> 
-                                            <div class="courses-info">
-                                                <%# <%= link_to 'Show', cars_path(car) %>
-                                                <a href="/cars/<%= car.id %>" class="btn btn-danger btn-lg btn-block">Mas Info</a>
-                                            </div> 
-                                        </div> 
-                                    </div> 
-                                </div> 
-                            </div>
-                        <% end %>     
+
+    <div class="container-fluid p-0">
+      <div class="row justify-content-center mt-5 m-0 p-0">
+        <div class="col-lg-10">
+          <div class="row justify-content-center" id="allCars">
+            <% @filteredCars.each do |filteredCar| %>
+              <div class="col-lg-6 col-xs-12\">
+                <div class="row">
+                  <div class="col-12">
+                    <div class="courses-thumb courses-thumb-secondary">
+                      <div class="courses-top">
+                        <div class="courses-image text-center">
+                          <%if filteredCar.images.attached? %>
+                            <%= image_tag filteredCar.images[0], class: "imgCoche", alt: "Responsive image" %>
+                          <%else %>
+                            <img src="<%= asset_path('defaultCar.png') %>" class="img-fluid" alt="Responsive image">
+                          <%end %>
+                        </div>
+                        <div class="courses-date">
+                          <span title="Author"><i class="fa fa-dashboard"></i><%= filteredCar.kilometros %> Km</span>
+                          <span title="Author"><i class="fa fa-cube"></i><%= filteredCar.cilindrada %> CC</span>
+                          <span title="Views"><i class="fa fa-cog"></i><%= filteredCar.cajadecambios %></span>
+                        </div>
+                      </div>
+                      <div class="courses-detail">
+                        <h3><a href="/cars/<%= filteredCar.id %>" class="carTitle"> <%= filteredCar.marca %> <%= filteredCar.modelo %></a></h3>
+                        <p class="lead"><strong><b><%= filteredCar.precio %>€</b></strong></p>
+                        <p><%= filteredCar.potencia %> CV &nbsp;&nbsp;/&nbsp;&nbsp; <%= filteredCar.combustible %> &nbsp;&nbsp;/&nbsp;&nbsp; <%= filteredCar.puertas %> Puertas &nbsp;&nbsp;/&nbsp;&nbsp; <%= filteredCar.localizacion %></p>
+                        <p><%= filteredCar.descripcion %></p>
+                      </div>
+                      <div class="courses-info">
+                        <%# <%= link_to 'Show', cars_path(car) %>
+                        <a href="/cars/<%= filteredCar.id %>" class="btn btn-danger btn-lg btn-block">Mas Info</a>
+                      </div>
                     </div>
+                  </div>
                 </div>
-            </div>
-            <div class="row mt-5 paginationNav m-0 p-0">
-                <nav aria-label="Page navigation example">
-                    <ul class="pagination justify-content-center">
-                        <li class="page-item"><a class="page-link" id="btn_prev" href="javascript:prevPage()">Previous</a></li>
-                        <li class="page-item"><a class="page-link"><span id="page"></span></a></li>
-                        <li class="page-item"><a class="page-link" id="btn_next" href="javascript:nextPage()">Next</a></li>
-                    </ul>
-                </nav>
-            </div>
+              </div>
+            <% end %>
+          </div>
         </div>
+      </div>
+      <div class="row mt-5 paginationNav m-0 p-0">
+        <nav aria-label="Page navigation example">
+          <ul class="pagination justify-content-center">
+            <li class="page-item"><a class="page-link" id="btn_prev" href="javascript:prevPage()">Previous</a></li>
+            <li class="page-item"><a class="page-link"><span id="page"></span></a></li>
+            <li class="page-item"><a class="page-link" id="btn_next" href="javascript:nextPage()">Next</a></li>
+          </ul>
+        </nav>
+      </div>
+    </div>
 
-        <script>
-            var modal = document.getElementById('ModalForm');
+    <script>
+        var modal = document.getElementById('ModalForm');
 
-            window.onclick = function(event) {
-                if (event.target == modal) {
-                    modal.style.display = "none";
-                }
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
             }
-        </script>
-    </body>
+        }
+    </script>
+  </body>
 </html>
