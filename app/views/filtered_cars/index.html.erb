@@ -23,7 +23,7 @@
             <div class="col-lg-12">
               <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
                 <div class="container-fluid">
-                  <a class="navbar-brand" href="index.html">
+                  <a class="navbar-brand" href="/">
                     <img src="<%= asset_path('logo.png') %>" width="150" height="80" alt="">
                   </a>
                   <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mynavbar" style="float: right; width: 60px; height: 60px;">
@@ -38,7 +38,9 @@
                         <a class="nav-link" href="/cars" style="font-size: 1.8em;">Coches</a>
                       </li>
                       <li class="nav-item me-3">
-                        <a class="nav-link" href="perfil.html" id="profileButton" style="font-size: 1.8em; display: none;">Perfil</a>
+                        <% if logged_in?%>
+                          <a class="nav-link" href="/profile" id="profileButton" style="font-size: 1.8em">Perfil</a>
+                        <% end %>
                       </li>
                     </ul>
                     <div class="d-flex align-items-center">
@@ -98,57 +100,66 @@
       </div>
     </div>
 
-    <div class="container-fluid p-0">
-      <div class="row justify-content-center mt-5 m-0 p-0">
-        <div class="col-lg-10">
-          <div class="row justify-content-center" id="allCars">
-            <% @filteredCars.each do |filteredCar| %>
-              <div class="col-lg-6 col-xs-12\">
-                <div class="row">
-                  <div class="col-12">
-                    <div class="courses-thumb courses-thumb-secondary">
-                      <div class="courses-top">
-                        <div class="courses-image text-center">
-                          <%if filteredCar.images.attached? %>
-                            <%= image_tag filteredCar.images[0], class: "imgCoche", alt: "Responsive image" %>
-                          <%else %>
-                            <img src="<%= asset_path('defaultCar.png') %>" class="img-fluid" alt="Responsive image">
-                          <%end %>
+    <%#= if !@cars%>
+<!--        NO HAY COCHES PUTO-->
+    <%# end %>
+
+    <% if @filteredCars.size != 0 %>
+      <div class="container-fluid p-0">
+        <div class="row justify-content-center mt-5 m-0 p-0">
+          <div class="col-lg-10">
+            <div class="row justify-content-center" id="allCars">
+              <%= paginate @cars %>
+              <% @filteredCars.each do |filteredCar| %>
+                <div class="col-lg-6 col-xs-12 mt-3">
+                  <div class="row">
+                    <div class="col-12">
+                      <div class="courses-thumb courses-thumb-secondary">
+                        <div class="courses-top">
+                          <div class="courses-image text-center">
+                            <%if filteredCar.images.attached? %>
+                              <%= image_tag filteredCar.images[0], class: "imgCoche", alt: "Responsive image" %>
+                            <%else %>
+                              <img src="<%= asset_path('defaultCar.png') %>" class="img-fluid" alt="Responsive image">
+                            <%end %>
+                          </div>
+                          <div class="courses-date">
+                            <span title="Author"><i class="fa fa-dashboard"></i><%= filteredCar.kilometros %> Km</span>
+                            <span title="Author"><i class="fa fa-cube"></i><%= filteredCar.cilindrada %> CC</span>
+                            <span title="Views"><i class="fa fa-cog"></i><%= filteredCar.cajadecambios %></span>
+                          </div>
                         </div>
-                        <div class="courses-date">
-                          <span title="Author"><i class="fa fa-dashboard"></i><%= filteredCar.kilometros %> Km</span>
-                          <span title="Author"><i class="fa fa-cube"></i><%= filteredCar.cilindrada %> CC</span>
-                          <span title="Views"><i class="fa fa-cog"></i><%= filteredCar.cajadecambios %></span>
+                        <div class="courses-detail">
+                          <h3><a href="/cars/<%= filteredCar.id %>" class="carTitle"> <% if filteredCar.destacado == 1%> <i class="icon ion-ios-star"></i> <% end %> <%= filteredCar.marca %> <%= filteredCar.modelo %></a></h3>
+                          <p class="lead"><strong><b><%= filteredCar.precio %>€</b></strong></p>
+                          <p><%= filteredCar.potencia %> CV &nbsp;&nbsp;/&nbsp;&nbsp; <%= filteredCar.combustible %> &nbsp;&nbsp;/&nbsp;&nbsp; <%= filteredCar.puertas %> Puertas &nbsp;&nbsp;/&nbsp;&nbsp; <%= filteredCar.localizacion %></p>
+                          <p><%= filteredCar.descripcion[0..180]...%></p>
                         </div>
-                      </div>
-                      <div class="courses-detail">
-                        <h3><a href="/cars/<%= filteredCar.id %>" class="carTitle"> <%= filteredCar.marca %> <%= filteredCar.modelo %></a></h3>
-                        <p class="lead"><strong><b><%= filteredCar.precio %>€</b></strong></p>
-                        <p><%= filteredCar.potencia %> CV &nbsp;&nbsp;/&nbsp;&nbsp; <%= filteredCar.combustible %> &nbsp;&nbsp;/&nbsp;&nbsp; <%= filteredCar.puertas %> Puertas &nbsp;&nbsp;/&nbsp;&nbsp; <%= filteredCar.localizacion %></p>
-                        <p><%= filteredCar.descripcion %></p>
-                      </div>
-                      <div class="courses-info">
-                        <%# <%= link_to 'Show', cars_path(car) %>
-                        <a href="/cars/<%= filteredCar.id %>" class="btn btn-danger btn-lg btn-block">Mas Info</a>
+                        <div class="courses-info">
+                          <%# <%= link_to 'Show', cars_path(car) %>
+                          <a href="/cars/<%= filteredCar.id %>" class="btn btn-danger btn-lg btn-block">Mas Info</a>
+                        </div>
                       </div>
                     </div>
                   </div>
                 </div>
+              <% end %>
+              <%= paginate @cars %>
+              <div class="mt-5">
               </div>
-            <% end %>
+            </div>
           </div>
         </div>
       </div>
-      <div class="row mt-5 paginationNav m-0 p-0">
-        <nav aria-label="Page navigation example">
-          <ul class="pagination justify-content-center">
-            <li class="page-item"><a class="page-link" id="btn_prev" href="javascript:prevPage()">Previous</a></li>
-            <li class="page-item"><a class="page-link"><span id="page"></span></a></li>
-            <li class="page-item"><a class="page-link" id="btn_next" href="javascript:nextPage()">Next</a></li>
-          </ul>
-        </nav>
+    <% else %>
+      <div class="col-12 mt-5 justify-content-center">
+        <div class="alert alert-primary h2 text-center mx-5" role="alert">
+          No hay coches a mostrar para la busqueda seleccionada
+        </div>
       </div>
-    </div>
+    <% end %>
+
+
 
     <script>
         var modal = document.getElementById('ModalForm');

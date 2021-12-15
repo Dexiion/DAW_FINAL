@@ -1,10 +1,15 @@
 class CarsController < ApplicationController
   def index
-    @cars = Car.all
+    @cars = Car.all.page(params[:page])
   end
 
   def show
     @car = Car.find(params[:id])
+    @user = User.find_by_id(@car.user_id)
+    @otherCarImages = []
+    if @car.images.size > 1
+      @otherCarImages = @car.images[1..]
+    end
   end
 
   def new
@@ -12,13 +17,10 @@ class CarsController < ApplicationController
   end
 
   def create
-    params[:idusuario] = helpers.current_user.id
-    @car = Car.new(car_params)
+    @user = helpers.current_user
+    @car = @user.cars.create(car_params)
     @car.save
-    # puts "FUNCIONAAAAAAAAAAAAAAAAAAA ASQUEROSOOOOOOOOOOOOOOOOOOOOOOOOOOOO"
-    # puts "PARAMETRO:" + params[:idusuario]
-    # puts "PORFAVOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOR"
-    redirect_to "/"
+    redirect_to @car
   end
 
   private

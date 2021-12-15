@@ -23,7 +23,7 @@
             <div class="col-lg-12">
               <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
                 <div class="container-fluid">
-                  <a class="navbar-brand" href="index.html">
+                  <a class="navbar-brand" href="/">
                     <img src="<%= asset_path('logo.png') %>" width="150" height="80" alt="">
                   </a>
                   <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mynavbar" style="float: right; width: 60px; height: 60px;">
@@ -38,7 +38,9 @@
                         <a class="nav-link" href="/cars" style="font-size: 1.8em;">Coches</a>
                       </li>
                       <li class="nav-item me-3">
-                        <a class="nav-link" href="perfil.html" id="profileButton" style="font-size: 1.8em; display: none;">Perfil</a>
+                        <% if logged_in?%>
+                          <a class="nav-link" href="/profile" id="profileButton" style="font-size: 1.8em">Perfil</a>
+                        <% end %>
                       </li>
                     </ul>
                     <div class="d-flex align-items-center">
@@ -104,6 +106,9 @@
           <h1>Registro</h1>
           <p>Rellene este formulario para crear su cuenta</p>
           <hr>
+          <b><%=  f.label :fullname, "Nombre y Apellidos"%></b>
+          <%= f.text_field :fullname, :placeholder => "Introduzca Nombre y Apellidos", :required => true%>
+
           <b><%=  f.label :username, "Usuario"%></b>
           <%= f.text_field :username, :placeholder => "Introduzca Nombre de Usuario", :required => true%>
 
@@ -121,8 +126,15 @@
           <b><%=  f.label :location, "Provincia"%></b>
           <%= f.text_field :location, :placeholder => "Provincia", :required => true%>
 
+          <b><%=  f.label :zipcode, "Código Postal"%></b>
+          <%= f.text_field :zipcode, :placeholder => "Código Postal", :required => true%>
+
+          <b><%=  f.label :borndate, "Fecha de Nacimiento"%></b>
+          <%= f.text_field :borndate, :placeholder => "Fecha de Nacimiento", :pattern => '^(19|20)\d\d[-](0[1-9]|1[012])[-](0[1-9]|[12][0-9]|3[01])$', :title => 'La fecha debe tener formato AAAA-MM-DD', :required => true%>
+
           <b><%=  f.label :telephone, "Telefono"%></b>
           <%= f.text_field :telephone, :placeholder => "Telefono (Ópcional) - Ej: 123 456 789", :pattern => "[0-9]{3} [0-9]{3} [0-9]{3}", :tittle => "El telefono deben ser 9 numeros agrupados en 3 separados por espacios Ej: 123 456 789"%>
+
 
           <p>Creando esta cuenta usted acepta nuestra <a href="#">Politica y Terminos</a>.</p>
 

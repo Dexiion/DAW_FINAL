@@ -18,9 +18,16 @@ class UsersController < ApplicationController
     @user = User.find_by(params[:id])
   end
 
+  def updateProfilePhoto
+    @user = helpers.current_user
+    @user.image.purge
+    @user.image.attach(params[:image])
+    redirect_to "/profile"
+  end
+
   private
 
   def user_params
-    params.require(:user).permit(:username, :email, :password, :location, :telephone)
+    params.require(:user).permit(:fullname, :username, :email, :password, :location, :telephone, :zipcode, :borndate, :image)
   end
 end
