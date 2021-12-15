@@ -8,7 +8,7 @@ class CarsController < ApplicationController
     @user = User.find_by_id(@car.user_id)
     @otherCarImages = []
     if @car.images.size > 1
-      @otherCarImages = @car.images[1..]
+      @otherCarImages = @car.images[1..-1]
     end
   end
 
