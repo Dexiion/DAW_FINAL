@@ -111,74 +111,76 @@
         <div class="row mt-5 justify-content-center">
           <div class="col-8 ms-md-2 ms-sm-3">
             <div class="row mx-auto my-auto justify-content-center">
-              <div id="carouselId" class="carousel slide carousel-fade" data-bs-ride="carousel">
-                <div id="outstandingCarousel" class="carousel-inner" role="listbox">
-                  <div class="carousel-item active">
-                    <div class="col-lg-3 col-12">
-                      <div class="card-sl" style="margin-right: 10px;">
-                        <div class="card-image">
-                          <%if @firstOutstandingCars.images.attached? %>
-                            <%= image_tag @firstOutstandingCars.images[0], class: "imgCoche", alt: "Responsive image" %>
-                          <%else %>
-                            <img src="<%= asset_path('defaultCar.png') %>" class="img-fluid" alt="Responsive image">
-                          <%end %>
-                        </div>
-                        <div class="card-heading">
-                          <%= @firstOutstandingCars.marca %>
-                        </div>
-                        <div class="card-subheading">
-                          <%= @firstOutstandingCars.modelo %>
-                        </div>
-                        <div class="card-text">
-                          <p style="font-size: 1.1em; margin-top: -10px;">Km: <b><%= @firstOutstandingCars.kilometros %> Km</b></p>
-                          <p style="font-size: 1.1em; margin-top: -10px;">Provincia: <b><%= @firstOutstandingCars.localizacion %></b></p>
-                          <p style="font-size: 1.1em; margin-top: -10px;">Caja de Cambios: <b><%= @firstOutstandingCars.cajadecambios %></b></p>
-                        </div>
-                        <div class="card-price">
-                          <%= @firstOutstandingCars.precio %>€
-                        </div>
-                        <a href="/cars/<%= @firstOutstandingCars.id %>" class="card-button"> Mas Info</a>
-                      </div>
-                    </div>
-                  </div>
-                  <% @otherOutstandingCars.each do |outstandingCar| %>
-                    <div class="carousel-item">
+              <% if @outstandingCars.size > 0 %>
+                <div id="carouselId" class="carousel slide carousel-fade" data-bs-ride="carousel">
+                  <div id="outstandingCarousel" class="carousel-inner" role="listbox">
+                    <div class="carousel-item active">
                       <div class="col-lg-3 col-12">
                         <div class="card-sl" style="margin-right: 10px;">
                           <div class="card-image">
-                            <%if outstandingCar.images.attached? %>
-                              <%= image_tag outstandingCar.images[0], class: "imgCoche", alt: "Responsive image" %>
+                            <%if @firstOutstandingCars.images.attached? %>
+                              <%= image_tag @firstOutstandingCars.images[0], class: "imgCoche", alt: "Responsive image" %>
                             <%else %>
                               <img src="<%= asset_path('defaultCar.png') %>" class="img-fluid" alt="Responsive image">
                             <%end %>
                           </div>
                           <div class="card-heading">
-                            <%= outstandingCar.marca %>
+                            <%= @firstOutstandingCars.marca %>
                           </div>
                           <div class="card-subheading">
-                            <%= outstandingCar.modelo %>
+                            <%= @firstOutstandingCars.modelo %>
                           </div>
                           <div class="card-text">
-                            <p style="font-size: 1.1em; margin-top: -10px;">Km: <b><%= outstandingCar.kilometros %> Km</b></p>
-                            <p style="font-size: 1.1em; margin-top: -10px;">Provincia: <b><%= outstandingCar.localizacion %></b></p>
-                            <p style="font-size: 1.1em; margin-top: -10px;">Caja de Cambios: <b><%= outstandingCar.cajadecambios %></b></p>
+                            <p style="font-size: 1.1em; margin-top: -10px;">Km: <b><%= @firstOutstandingCars.kilometros %> Km</b></p>
+                            <p style="font-size: 1.1em; margin-top: -10px;">Provincia: <b><%= @firstOutstandingCars.localizacion %></b></p>
+                            <p style="font-size: 1.1em; margin-top: -10px;">Caja de Cambios: <b><%= @firstOutstandingCars.cajadecambios %></b></p>
                           </div>
                           <div class="card-price">
-                            <%= outstandingCar.precio %>€
+                            <%= @firstOutstandingCars.precio %>€
                           </div>
-                          <a href="/cars/<%= outstandingCar.id %>" class="card-button"> Mas Info</a>
+                          <a href="/cars/<%= @firstOutstandingCars.id %>" class="card-button"> Mas Info</a>
                         </div>
                       </div>
                     </div>
-                  <% end %>
+                    <% @otherOutstandingCars.each do |outstandingCar| %>
+                      <div class="carousel-item">
+                        <div class="col-lg-3 col-12">
+                          <div class="card-sl" style="margin-right: 10px;">
+                            <div class="card-image">
+                              <%if outstandingCar.images.attached? %>
+                                <%= image_tag outstandingCar.images[0], class: "imgCoche", alt: "Responsive image" %>
+                              <%else %>
+                                <img src="<%= asset_path('defaultCar.png') %>" class="img-fluid" alt="Responsive image">
+                              <%end %>
+                            </div>
+                            <div class="card-heading">
+                              <%= outstandingCar.marca %>
+                            </div>
+                            <div class="card-subheading">
+                              <%= outstandingCar.modelo %>
+                            </div>
+                            <div class="card-text">
+                              <p style="font-size: 1.1em; margin-top: -10px;">Km: <b><%= outstandingCar.kilometros %> Km</b></p>
+                              <p style="font-size: 1.1em; margin-top: -10px;">Provincia: <b><%= outstandingCar.localizacion %></b></p>
+                              <p style="font-size: 1.1em; margin-top: -10px;">Caja de Cambios: <b><%= outstandingCar.cajadecambios %></b></p>
+                            </div>
+                            <div class="card-price">
+                              <%= outstandingCar.precio %>€
+                            </div>
+                            <a href="/cars/<%= outstandingCar.id %>" class="card-button"> Mas Info</a>
+                          </div>
+                        </div>
+                      </div>
+                    <% end %>
+                  </div>
+                  <a class="carousel-control-prev bg-transparent w-aut " href="#carouselId" role="button" data-bs-slide="prev" style="height: 32px; width: 32px; margin-top: 15rem !important; margin-left: -1.8rem !important;">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                  </a>
+                  <a class="carousel-control-next bg-transparent w-aut" href="#carouselId" role="button" data-bs-slide="next" style="height: 32px; width: 32px; margin-top: 15rem !important; margin-right: -1rem !important;">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                  </a>
                 </div>
-                <a class="carousel-control-prev bg-transparent w-aut " href="#carouselId" role="button" data-bs-slide="prev" style="height: 32px; width: 32px; margin-top: 15rem !important; margin-left: -1.8rem !important;">
-                  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                </a>
-                <a class="carousel-control-next bg-transparent w-aut" href="#carouselId" role="button" data-bs-slide="next" style="height: 32px; width: 32px; margin-top: 15rem !important; margin-right: -1rem !important;">
-                  <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                </a>
-              </div>
+              <% end %>
             </div>
           </div>
 

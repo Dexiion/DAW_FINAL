@@ -5,10 +5,6 @@ class HomeController < ApplicationController
     @firstOutstandingCars = @outstandingCars[0]
     @otherOutstandingCars = @outstandingCars[1..-1]
 
-
-    # otherCarsArray = Questions.new(notOustandingCars)
-    # @otherCars = 6.times.map{ otherCarsArray.pick }
-
     @otherCars = @notOustandingCars[0..5]
   end
 
