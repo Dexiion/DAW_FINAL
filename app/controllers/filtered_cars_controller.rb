@@ -15,7 +15,7 @@ class FilteredCarsController < ApplicationController
 
   def parseMinPrice(paramName,paramValue)
     if (paramValue.eql?("Min.") || paramValue.eql?(nil))
-      return paramName + " <> " + "'fawiodfnawionfawiofwafaw'"
+      return paramName + " <> " + "-5"
     else
       return paramName + " > " +  "'" + paramValue + "'"
     end
@@ -23,7 +23,7 @@ class FilteredCarsController < ApplicationController
 
   def parseMaxPrice(paramName,paramValue)
     if (paramValue.eql?("Max.") || paramValue.eql?(nil))
-      return paramName + " <> " + "'fawlpmfawmfawopfmawopmd'"
+      return paramName + " <> " + "-5"
     else
       return paramName + " < " + "'" + paramValue + "'"
     end
