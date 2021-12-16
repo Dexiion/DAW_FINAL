@@ -7,25 +7,25 @@ class FilteredCarsController < ApplicationController
 
   def parseCondition(paramName,paramValue)
     if (paramValue.eql?("Provincia") || paramValue.eql?("Marca") || paramValue.eql?("Combustible") || paramValue.eql?("Puertas") || paramValue.eql?(nil))
-      return paramName + " <> " + "\"dmwaoidnawkodnawonfoiwan\""
+      return paramName + " <> " + "'dmwaoidnawkodnawonfoiwan'"
     else
-      return paramName + " = " +  "\"" + paramValue + "\""
+      return paramName + " = " +  "'" + paramValue + "'"
     end
   end
 
   def parseMinPrice(paramName,paramValue)
     if (paramValue.eql?("Min.") || paramValue.eql?(nil))
-      return paramName + " <> " + "\"fawiodfnawionfawiofwafaw\""
+      return paramName + " <> " + "'fawiodfnawionfawiofwafaw'"
     else
-      return paramName + " > " +  "\"" + paramValue + "\""
+      return paramName + " > " +  "'" + paramValue + "'"
     end
   end
 
   def parseMaxPrice(paramName,paramValue)
     if (paramValue.eql?("Max.") || paramValue.eql?(nil))
-      return paramName + " <> " + "\"fawlpmfawmfawopfmawopmd\""
+      return paramName + " <> " + "'fawlpmfawmfawopfmawopmd'"
     else
-      return paramName + " < " + "\"" + paramValue + "\""
+      return paramName + " < " + "'" + paramValue + "'"
     end
   end
 end
