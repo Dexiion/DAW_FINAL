@@ -3,15 +3,8 @@
 <html lang="es">
   <head>
     <meta charset="utf-8" />
-    <link rel="stylesheet" href="Estilos/homePage.css">
-    <link rel="stylesheet" href="Estilos/infocochePage.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/2.3.0/mustache.min.js"></script>
-    <script src="scripts/scriptsanuncio.js"></script>
-    <script src="scripts/checkLoggingScripts.js"></script>
 
 
     <title>Anuncio del vehiculo</title>
@@ -121,7 +114,7 @@
                 <div class="col-12">
                   <div class="white-box text-center mt-3">
                     <div id="carouselId" class="carousel"  data-bs-ride="carousel">
-                      <div id="outstandingCarousel" class="carousel-inner" role="listbox">
+                      <div id="" class="carousel-inner" role="listbox">
                         <div class="carousel-inner text-center" id="Imagenes">
                           <%if @car.images.attached? %>
                             <div class="carousel-item justify-content-around active">
@@ -148,7 +141,7 @@
                         </div>
                       </div>
                       <div id="carouselNav">
-                        <%if @otherCarImages.size > 0 %>
+                        <%if @car.images.size > 1 %>
                           <a class="carousel-control-prev bg-transparent w-aut" href="#carouselId" role="button" data-bs-slide="prev" style="height: 32px; width: 32px; margin-top: 13rem !important; margin-left: -1.8rem !important;">
                             <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                           </a>
@@ -272,24 +265,6 @@
                 modal.style.display = "none";
             }
         }
-
-        window.onload = function() {
-            let items = document.querySelectorAll('.carousel .carousel-item')
-
-            items.forEach((el) => {
-                const minPerSlide = 1;
-                let next = el.nextElementSibling;
-                for (var i=1; i<minPerSlide; i++) {
-                    if (!next) {
-
-                        next = items[0];
-                    }
-                    let cloneChild = next.cloneNode(true);
-                    el.appendChild(cloneChild.children[0]),
-                        next = next.nextElementSibling;
-                }
-            })
-        };
     </script>
   </body>
 </html>

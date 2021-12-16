@@ -121,10 +121,10 @@
                     <h5 class="text-center user-name"><%= @userInfo.fullname %></h5>
                     <h6 class="text-center user-email"><%= @userInfo.email %></h6>
                   </div>
-                  <hr>
-                  <h4 class="text-center user-name">Editar Foto</h4>
+                  <br>
                   <%= form_tag "/users/updateProfilePhoto", multipart: true do%>
-                    <%= file_field_tag :image, class: "form-control", onchange: "this.form.submit()" %>
+                    <%= file_field_tag :image, class: "form-control", onchange: "this.form.submit()", id: "selectedFile", style: "display: none;" %>
+                    <input type="button" class="btn btn-danger" value="Cambiar Foto" onclick="document.getElementById('selectedFile').click();" />
                   <% end %>
                 </div>
               </div>

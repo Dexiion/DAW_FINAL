@@ -326,7 +326,7 @@
       </footer>
     </div>
     <script>
-        window.onload = function() {
+        $( document ).ready(function() {
             let items = document.querySelectorAll('.carousel .carousel-item')
 
             items.forEach((el) => {
@@ -342,11 +342,7 @@
                         next = next.nextElementSibling;
                 }
             })
-        };
-
-        var checkLogging = function() {
-            document.getElementById("perfilForm").submit();
-        }
+        });
 
         var submitFilterForm = function() {
             document.getElementById("filterForm").submit();
